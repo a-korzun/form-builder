@@ -6,11 +6,12 @@ import './style.css';
 
 interface Props {
   defaultActiveKey: string;
+  onTabChange?: (id: string) => void;
 }
 
 type TabComponent = React.ReactElement<TabProps>;
 
-const Tabs: React.FC<Props> & { Tab: typeof Tab }= ({ defaultActiveKey, children }) => {
+const Tabs: React.FC<Props> & { Tab: typeof Tab }= ({ defaultActiveKey, onTabChange, children }) => {
   const [activeTabId, setActiveTabId] = useState<string>(defaultActiveKey);
   const [tabs, setTabs] = useState<TabProps[]>([])
   const [panes, setPanes] = useState<TabComponent[]>([])
@@ -20,10 +21,15 @@ const Tabs: React.FC<Props> & { Tab: typeof Tab }= ({ defaultActiveKey, children
       .toArray(children)
       .filter(el => isValidElement(el) && el.type === Tab) as TabComponent[];
 
-
     setTabs(childTabs.map(({ props }) => ({ title: props.title, id: props.id })));
     setPanes(childTabs);
-  }, [children]);
+    setActiveTabId(defaultActiveKey);
+  }, [children, defaultActiveKey]);
+
+  const handleTabChange = (id: string) => {
+    setActiveTabId(id);
+    onTabChange && onTabChange(id);
+  }
 
   return (
     <div className="tabs">
@@ -31,7 +37,7 @@ const Tabs: React.FC<Props> & { Tab: typeof Tab }= ({ defaultActiveKey, children
         { tabs.map(({ id, title }) => (
           <li key={id}>
             <button
-              onClick={() => setActiveTabId(id)}
+              onClick={() => handleTabChange(id)}
               className={`tabs__button ${id === activeTabId ? '_active' : ''}`}
             >{title}</button>
           </li>

@@ -6,7 +6,7 @@ import FormBuilder from './components/FormBuilder';
 
 import './App.css';
 
-const json = `{
+const json = {
   title: 'My Awesome Form',
   items: [
     {
@@ -63,16 +63,23 @@ const json = `{
       label: 'Apply',
     },
   ]
-}`;
+};
 
 function App() {
-  const [data, setData] = useState<string>(json);
+  const [data, setData] = useState<string>(JSON.stringify(json));
+  const [activeTab, setActiveTab] = useState<string>('config');
+
+  const handleSubmit = (data: string) => {
+    setData(data);
+
+    setActiveTab('result');
+  }
 
   return (
     <div className="app">
-      <Tabs defaultActiveKey="config">
+      <Tabs defaultActiveKey={activeTab} onTabChange={setActiveTab}>
         <Tabs.Tab title="Config" id="config">
-          <DataForm initalData={data} onSubmit={setData} />
+          <DataForm initalData={data} onSubmit={handleSubmit} />
         </Tabs.Tab>
         <Tabs.Tab title="Result" id="result">
           <FormBuilder data={data} />
