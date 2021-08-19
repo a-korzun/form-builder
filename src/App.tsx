@@ -6,7 +6,7 @@ import FormBuilder from './components/FormBuilder';
 
 import './App.css';
 
-const json = {
+const json = `{
   title: 'My Awesome Form',
   items: [
     {
@@ -63,10 +63,10 @@ const json = {
       label: 'Apply',
     },
   ]
-};
+}`;
 
 function App() {
-  const [data, setData] = useState<string>(JSON.stringify(json));
+  const [data, setData] = useState<string>(json);
 
   return (
     <div className="app">
