@@ -16,3 +16,8 @@
 .form-builder__footer button {
   margin: 0 4px;
 }
+
+.form-builder__error {
+  text-align: center;
+  color: crimson;
+}

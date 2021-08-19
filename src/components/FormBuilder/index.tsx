@@ -68,7 +68,11 @@ function isValidButton(button: unknown): button is Button {
 }
 
 export function parseForm(json: string) {
-  const { items, title, buttons } = JSON.parse(json);
+  try {
+    var { items, title, buttons } = JSON.parse(json);
+  } catch (err) {
+    return ['', '', ''];
+  }
 
   const inputs = items.map((it: unknown) => {
     if (isValidItem(it)) {
@@ -82,6 +86,8 @@ export function parseForm(json: string) {
     if (isValidButton(it)) {
       return <button key={uniqId()} type={it.type}>{it.label}</button>
     }
+
+    return null;
   });
 
   return [title, inputs, footer];
@@ -90,8 +96,11 @@ export function parseForm(json: string) {
 function FormBuilder({ data }: Props) {
   const [title, body, buttons] = parseForm(data);
 
-  const head = title && <h2>{title}</h2>;
-  const footer = buttons.length && <div className="form-builder__footer">{buttons}</div>;
+  if (!title && !body && !buttons) {
+    return <h3 className="form-builder__error">Error during parsing, perhaps JSON is not valid</h3>;
+  }
+  const head = title ? <h2>{title}</h2> : null;
+  const footer = buttons.length ? <div className="form-builder__footer">{buttons}</div> : null;
 
   return (
     <form className="form-builder">
