@@ -1,0 +1,13 @@
+.data-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.data-from__input {
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+  margin: 16px 0;
+  padding: 4px;
+}
