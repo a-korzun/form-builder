@@ -37,7 +37,9 @@ const Tabs: React.FC<Props> & { Tab: typeof Tab }= ({ defaultActiveKey, children
           </li>
         ))}
       </ul>
-      {panes.find(pane => pane.props.id === activeTabId)}
+      <div className="tabs__pane" data-testid="pane">
+        {panes.find(pane => pane.props.id === activeTabId)}
+      </div>
     </div>
   );
 }
