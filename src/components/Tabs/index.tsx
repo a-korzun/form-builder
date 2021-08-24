@@ -11,7 +11,7 @@ interface Props {
 
 type TabComponent = React.ReactElement<TabProps>;
 
-const Tabs: React.FC<Props> & { Tab: typeof Tab }= ({ defaultActiveKey, onTabChange, children }) => {
+const Tabs: React.FC<Props> & { Tab: typeof Tab } = ({ defaultActiveKey, onTabChange, children }) => {
   const [activeTabId, setActiveTabId] = useState<string>(defaultActiveKey);
   const [tabs, setTabs] = useState<TabProps[]>([])
   const [panes, setPanes] = useState<TabComponent[]>([])

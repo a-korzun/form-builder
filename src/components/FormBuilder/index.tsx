@@ -32,7 +32,7 @@ interface Button {
   label: string;
 }
 
-const renderer: Record<ItemTypes, Function> = {
+const renderer: Record<ItemTypes, (it: Item) => React.ReactElement> = {
   number: ({ label, value }: Item) => <label key={uniqId()}>{label} <input type="number" defaultValue={value} /></label>,
   text: ({ label, value }: Item) => <label key={uniqId()}>{label} <input type="text" defaultValue={value} /></label>,
   date: ({ label, value }: Item) => <label key={uniqId()}>{label} <input type="date" defaultValue={value} /></label>,
